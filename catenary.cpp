@@ -107,19 +107,22 @@ int main(){
         updateForces(coords, mass, K, gravity, forces);
         res = getResidual(forces);
         std::cout << "Iteration: " << iteration << " residual: " << res << std::endl;
+        if (iteration % 100 == 0){
+            std::ofstream results;
+            std::string frameName = "res_" + std::to_string(iteration) + ".csv";
+            results.open(frameName);
+            results << "x" << "," << "y" << '\n';
+            for (size_t i = 0; i < coords.size(); ++i){
+                results << coords[i].x << "," << coords[i].y << '\n';
+            }
+            results.close();
+        }
         iteration++;
+
     }
    
-   
-
-    std::ofstream results;
-    results.open ("res.csv");
-    results << "x" << "," << "y" << '\n';
-    for (size_t i = 0; i < coords.size(); ++i){
-        results << coords[i].x << "," << coords[i].y << '\n';
-    }      
+    
       
-    results.close();
 
    scalar length = 0;
 
